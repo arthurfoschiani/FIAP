@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/calculo.css">
+    <title>Calcula seu IMC</title>
+</head>
+
+<body>
+    <main>
+        <section>
+            <article>
+                <h1>Vamos calcular o seu IMC?</h1>
+                <h2>Insira seus dados para conferir o seu resultado</h2>
+                <div>
+                    <div class="Campos">
+                        <label for="peso">Peso</label>
+                        <div class="InputCombo">
+                            <input type="number" id="peso" name="peso" placeholder="64" min="10" max="200">
+                            <p>Kg</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="Campos segundoCampo">
+                        <label for="altura">Altura</label>
+                        <div class="InputCombo">
+                            <input type="text" id="altura" name="altura" placeholder="1,74"
+                                oninput="formatarAltura(this)">
+                            <p>cm</p>
+                        </div>
+                    </div>
+                </div>
+                <button id="myBtn" onclick="calcularIMC()">Calcular</button>
+            </article>
+        </section>
+        <section>
+
+        </section>
+    </main>
+    <div id="MeuModal" class="modal">
+        <div class="modal-content">
+            <!-- <span class="close">&times;</span> -->
+            <article id="box-resultado">
+                <p id="resultado"></p>
+            </article>
+        </div>
+    </div>
+</body>
+<script src="./js/calculo.js"></script>
+
+</html>

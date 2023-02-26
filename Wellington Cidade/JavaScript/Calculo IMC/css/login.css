@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif
+}
+
+main {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+
+main>section {
+    height: 100vh;
+    width: 45%;
+    background-color: #F2B705;
+}
+
+main>section>div {
+    position: absolute;
+    width: 45vw;
+    height: 70vh;
+    left: 5vw;
+    top: 30vh;
+
+    background: url('../img/test1.png');
+    background-repeat: no-repeat;
+}
+
+main>form {
+    height: 50vh;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-left: 10vw;
+}
+
+main>form h1 {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+main>form summary {
+    color: #8692A6;
+    font-size: 16px;
+    width: 100%;
+    font-weight: 100;
+}
+
+main>form>hr {
+    width: 80%;
+    border: 1px solid #f5f5f5;
+}
+
+main>form>div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 1.5em;
+}
+
+main>form>div>label {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+    color: #696F79;
+    font-size: 16px;
+}
+
+main>form>div>label.active {
+    transform: translateY(-24px);
+    font-size: 0.8em;
+    color: #F2B705;
+    background-color: #ffffff;
+    padding: 0 8px;
+    left: 10px;
+}
+
+main>form>div>input {
+    border: none;
+    border: 1px solid #696F79;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 18px;
+    padding-right: 13%;
+    font-size: 16px;
+}
+
+main>form>div>input:focus {
+    outline: none;
+    border-color: #F2B705;
+    box-shadow: 0 0 0 0.2rem #f2b7057e;
+}
+
+main>form>button {
+    box-sizing: border-box;
+    padding: 16px;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 18px;
+    background-color: #F2B705;
+    cursor: pointer;
+}
+
+#botao-olho {
+    cursor: pointer;
+}
+
+#icone-olho {
+    position: absolute;
+    bottom: 22px;
+    left: 90%;
+    color: #696F79;
+}
+
+@media (max-width: 1600px) {
+    main>section>div {
+        left: 0vw;
+    }
+}
+
+@media (max-width: 1400px) {
+    main>section {
+        display: none;
+    }
+
+    main>form {
+        height: 60vh;
+        margin: auto;
+        width: 50%;
+    }
+}
+
+@media (max-width: 850px) {
+    main>form {
+        width: 70%;
+    }
+}
