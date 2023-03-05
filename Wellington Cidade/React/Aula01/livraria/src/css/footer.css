@@ -1,0 +1,24 @@
+footer {
+    background-color: rgb(34, 34, 34);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+footer>ul {
+    display: flex;
+    height: 10vh;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+footer>ul>li {
+    text-decoration: none;
+    list-style: none;
+}
+
+footer>ul>li:first-child {
+    font-weight: 700;
+    letter-spacing: 5px;
+}
