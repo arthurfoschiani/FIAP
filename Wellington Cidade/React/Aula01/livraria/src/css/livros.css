@@ -31,7 +31,7 @@
     height: 35vh;
     width: fit-content;
     transition: 0.2s;
-    box-shadow: -1px 8px 14px -3px rgba(110,110,110,1);
+    box-shadow: -1px 8px 14px -3px rgba(110, 110, 110, 1);
 }
 
 .carousel-item>p {
