@@ -12,7 +12,7 @@ def buscar_feriados(ano: int):
 def verificar_feriado(data: datetime):
     feriados = buscar_feriados(data.year)
 
-    data_formatada = data.strftime("%Y-%m-%d")
+    data_formatada = data.strftime('%Y-%m-%d')
 
     for item in feriados:
         print(data_formatada, item['date'])
