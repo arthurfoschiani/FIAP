@@ -1,0 +1,15 @@
+footer {
+    background-color: rgb(98, 98, 98);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2vh;
+    position: fixed;
+    bottom: 0;
+}
+
+footer p {
+    color: #fff;
+    font-size: 0.8em;
+}

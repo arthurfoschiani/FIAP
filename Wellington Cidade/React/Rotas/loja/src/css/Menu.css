@@ -1,0 +1,21 @@
+nav {
+    background-color: rgb(98, 98, 98);
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: auto;
+    padding: 2vh;
+}
+
+nav ul li {
+    list-style: none;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8em;
+}
