@@ -1,12 +1,13 @@
 import requests
 
 def verificar_dominio(dominio):
-    url = f"https://brasilapi.com.br/api/registrobr/v1/{dominio}"
-    response = requests.get(url)
-    if response.status_code == 200:
+    try:
+        url = f"https://brasilapi.com.br/api/registrobr/v1/{dominio}"
+        response = requests.get(url)
+        response.raise_for_status()
         dados = response.json()
         return dados
-    else:
+    except requests.exceptions.HTTPError:
         return None
 
 def formatar_data(data):

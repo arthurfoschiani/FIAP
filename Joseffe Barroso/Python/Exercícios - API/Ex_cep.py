@@ -1,13 +1,13 @@
 import requests
 
 def busca_cep(cep):
-    url = f"https://viacep.com.br/ws/{cep}/json/"
-    response = requests.get(url)
-
-    if response.status_code == 200:
+    try:
+        url = f"https://viacep.com.br/ws/{cep}/json/"
+        response = requests.get(url)
+        response.raise_for_status()
         dados = response.json()
         return dados
-    else:
+    except requests.exceptions.HTTPError:
         return None
 
 def imprime_dados(dados):

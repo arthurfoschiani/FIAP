@@ -1,12 +1,16 @@
 import requests
 
 def obter_dados_usuario(user):
-    url = f"https://api.github.com/users/{user}"
-    response = requests.get(url)
-    if response.status_code == 200:
+    try:
+        url = f"https://api.github.com/users/{user}"
+        response = requests.get(url)
+        response.raise_for_status()
         return response.json()
-    else:
+    except requests.exceptions.HTTPError as e:
+        print(f"Erro ao fazer requisição: {e}")
         return None
+    finally:
+        response.close()
 
 def exibir_dados_usuario(dados):
     if dados:
