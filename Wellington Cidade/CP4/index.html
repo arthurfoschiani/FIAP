@@ -6,19 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CP4-WEB/RESP</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <h1>Início do programa</h1>
+    <header>
+        <div class="container">
+            <h1>Meu programa em HTML</h1>
+        </div>
+    </header>
 
-    <button id="botaoFunction">Clique aqui para utilizar a function</button>
-    <button id="botaoArrow">Clique aqui para utilizar a arrow function</button>
+    <main>
+        <div class="container">
+            <h2>Início do programa</h2>
 
-    <label for="">Digite a sua idade:</label>
-    <input type="number" id="idade">
-    <button id="botaoIdade">Confirmar</button>
+            <div class="buttons-container">
+                <button id="botaoFunction">Utilizar a função</button>
+                <button id="botaoArrow">Utilizar a arrow function</button>
+            </div>
+
+            <form>
+                <label for="idade">Digite a sua idade:</label>
+                <input type="number" id="idade" required>
+                <button id="botaoIdade">Confirmar</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+
 </body>
-
-<script src="./script.js"></script>
 
 </html>
