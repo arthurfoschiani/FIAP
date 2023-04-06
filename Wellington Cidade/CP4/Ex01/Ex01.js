@@ -10,12 +10,12 @@ const escola = {
 // Exibindo os valores do objeto escola
 console.log(escola);
 
-// Criando o método telaaluno que exibe uma mensagem na tela quando o aluno está estudando
-escola.telaAluno = (aluno) => console.log(`${aluno} está estudando!`);
+// Criando o método tela que exibe uma mensagem na tela quando o aluno está estudando
+escola.tela = (aluno) => console.log(`${aluno} está estudando!`);
 
 // Exibindo a mensagem de um aluno estudando
-escola.telaAluno("Ana");
+escola.tela("Ana");
 
 // Utilizando o método find para buscar um aluno pelo nome e exibindo na tela
-const alunoEncontrado = escola.aluno.find((aluno) => aluno === "Pedro");
-console.log(alunoEncontrado);
+const alunoEncontrado = (nomeAluno) => escola.aluno.find((aluno) => aluno === nomeAluno);
+console.log(alunoEncontrado("Pedro"));

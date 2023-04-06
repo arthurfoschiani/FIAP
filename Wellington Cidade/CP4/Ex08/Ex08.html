@@ -5,10 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        body>div{
+            margin: 1vh;
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+        }
+        input {
+            height: 3vh;
+            border: 1px solid #d1d1d1;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+        button {
+            text-decoration: none;
+            color: #fff;
+            background-color: #3083ff;
+            border: 1px solid #3083ff;
+            transition: 0.2s;
+            width: 30%;
+
+            box-sizing: border-box;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 1vh;
+        }
+
+        button:hover {
+            color: #3083ff;
+            background-color: #fff;
+            border: 1px solid #3083ff;
+        }
+    </style>
     <title>Exercício 08</title>
 </head>
 <body>
-
+    <div>
+        <label for="num">Adicione o número</label>
+        <input type="number" id="num" name="num">
+    </div>
+    <div>
+        <label for="divisor">Adicione o divisor</label>
+        <input type="number" id="divisor" name="divisor">
+    </div>
+    <button id="button">Calcular</button>
     <script src="./Ex08.js"></script>
 </body>
 </html>

@@ -5,10 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        body>div{
+            margin: 1vh;
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+        }
+        input {
+            height: 3vh;
+            border: 1px solid #d1d1d1;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+    </style>
     <title>Exercício 07</title>
 </head>
 <body>
-
+    <div>
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" name="idade">
+    </div>
+    <p id="resposta"></p>
     <script src="./Ex07.js"></script>
 </body>
 </html>

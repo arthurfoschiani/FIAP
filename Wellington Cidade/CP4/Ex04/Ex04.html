@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
+    <style>
+        body {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            text-decoration: none;
+            color: #fff;
+            background-color: #3083ff;
+            border: 1px solid #3083ff;
+            transition: 0.2s;
+
+            box-sizing: border-box;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button>:hover {
+            color: #3083ff;
+            background-color: #fff;
+            border: 1px solid #3083ff;
+        }
+    </style>
     <title>Exercício 04</title>
 </head>
+
 <body>
     <div class="buttons-container">
         <button id="botaoFunction">Utilizar a função</button>
@@ -14,4 +44,5 @@
     </div>
     <script src="./Ex04.js"></script>
 </body>
+
 </html>

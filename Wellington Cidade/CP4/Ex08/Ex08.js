@@ -1,10 +1,18 @@
-// Exemplo 1: verificar se um número é divisível por outro
-let num2 = 10;
-let divisor = 5;
-if (num2 % divisor === 0) {
-    console.log(num2 + ' é divisível por ' + divisor);
-} else {
-    console.log(num2 + ' não é divisível por ' + divisor);
+// Função que verifica se um número é divisível por outro
+const verificaDivisibilidade = () => {
+    // Obtém os valores do número e do divisor inseridos nos campos de entrada de texto na página HTML
+    const num = document.querySelector("#num").value;
+    const divisor = document.querySelector("#divisor").value;
+
+    // Verifica se o número é divisível pelo divisor inserido, e exibe o resultado em um alerta
+    if (num % divisor === 0) {
+        alert(num + ' é divisível por ' + divisor);
+    } else {
+        alert(num + ' não é divisível por ' + divisor);
+    }
 }
 
-//No primeiro exemplo, o operador % é usado para verificar se um número é divisível por outro. Se o resto da divisão de num2 por divisor for igual a zero, então num2 é divisível por divisor.
+// Seleciona o botão na página HTML
+const botao = document.querySelector("#button");
+// Adiciona o evento de clique ao botão, para chamar a função que verifica a divisibilidade
+botao.addEventListener("click", verificaDivisibilidade);
