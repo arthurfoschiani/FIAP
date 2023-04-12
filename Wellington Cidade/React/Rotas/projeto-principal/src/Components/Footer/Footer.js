@@ -5,7 +5,7 @@ function Footer() {
   return (
     <>
       <footer>
-        <ul>
+        <ul className='rsocial'>
           <li><FaFacebook></FaFacebook></li>
           <li><FaInstagram></FaInstagram></li>
           <li><FaLinkedin></FaLinkedin></li>
