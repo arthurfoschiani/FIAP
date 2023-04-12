@@ -1,0 +1,37 @@
+CREATE TABLE cliente (
+    cod_clie NUMBER(4) CONSTRAINT CLI_CD_PK PRIMARY KEY,
+    nome_clie VARCHAR(20) CONSTRAINT CLI_NM_NN NOT NULL,
+    endereco VARCHAR(30),
+    cidade VARCHAR(15),
+    cep CHAR(8),
+    UF CHAR(2),
+    cnpj CHAR(16),
+    ie CHAR(12)
+);
+
+CREATE TABLE vendedor (
+    cod_ven NUMBER(4) CONSTRAINT VEN_CD_PK PRIMARY KEY,
+    nome_ven VARCHAR(20) CONSTRAINT VEN_NM_NN NOT NULL,
+    salario_fixo NUMBER(10,2),
+    comissao CHAR(1)
+);
+
+CREATE TABLE produto (
+    cod_pro NUMBER(4) CONSTRAINT PRD_CD_PK PRIMARY KEY,
+    unidade VARCHAR(3),
+    descricao VARCHAR(20),
+    val_unit NUMBER(8,2)
+);
+
+CREATE TABLE pedido (
+    num_pedido NUMBER(4) CONSTRAINT PED_NUM_PK PRIMARY KEY,
+    pr_entrega NUMBER(3) CONSTRAINT PED_PR_NN NOT NULL,
+    cod_clie NUMBER(4) CONSTRAINT PED_CLI_FK REFERENCES cliente,
+    cod_ven NUMBER(4) CONSTRAINT PED_VEN_FK REFERENCES vendedor
+);
+
+CREATE TABLE item_pedido (
+    num_pedido NUMBER(4) CONSTRAINT ITEM_PED_FK REFERENCES pedido,
+    cod_produto NUMBER(4) CONSTRAINT ITEM_PRD_FK REFERENCES produto,
+    quant NUMBER(8,2)
+);
