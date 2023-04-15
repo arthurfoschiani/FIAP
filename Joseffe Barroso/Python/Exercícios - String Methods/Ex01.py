@@ -2,16 +2,16 @@ alunosVestibular = "Jose dos Santos,7,Sao Paulo;Sandra Silva,6.5,Sao Jose do Rio
 
 alunosList = alunosVestibular.split(';')
 
-alunosDict = {}
+alunosAprov = []
 
 for aluno in alunosList:
     alunoInfo = aluno.split(',')
     nota = float(alunoInfo[1])
     if nota >= 7:
-        alunosDict[alunoInfo[0]] = {'Nota': nota, 'Cidade': alunoInfo[2]}
+        alunosAprov.append({'Nome': alunoInfo[0], 'Nota': nota, 'Cidade': alunoInfo[2]})
 
-for nome, info in alunosDict.items():
-    print('Nome:', nome)
-    print('Nota:', info['Nota'])
-    print('Cidade:', info['Cidade'])
+for item in alunosAprov:
+    print('Nome:', item['Nome'])
+    print('Nota:', item['Nota'])
+    print('Cidade:', item['Cidade'])
     print()

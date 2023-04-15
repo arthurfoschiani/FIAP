@@ -2,27 +2,27 @@ baseDados = "CJose dos Santos,42,Sao Paulo;CSandra Silva,36,Sao Jose do Rio Pret
 
 dadosList = baseDados.split(';')
 
-clientesDict = {}
-produtosDict = {}
+clientes = []
+produtos = []
 
 for dado in dadosList:
     if dado.startswith('C'):
         clienteInfo = dado[1:].split(',')
-        clientesDict[clienteInfo[0]] = {'Idade': clienteInfo[1], 'Cidade': clienteInfo[2]}
+        clientes.append({'Nome': clienteInfo[0], 'Idade': clienteInfo[1], 'Cidade': clienteInfo[2]})
     elif dado.startswith('P'):
         produtoInfo = dado[1:].split(',')
-        produtosDict[produtoInfo[0]] = {'Qtd em estoque': produtoInfo[1], 'Preço': produtoInfo[2]}
+        produtos.append({'Nome': produtoInfo[0], 'Qtd em estoque': produtoInfo[1], 'Preço': produtoInfo[2]})
 
 print('Clientes:')
-for nome, info in clientesDict.items():
-    print('Nome:', nome)
-    print('Idade:', info['Idade'])
-    print('Cidade:', info['Cidade'])
+for item in clientes:
+    print('Nome:', item['Nome'])
+    print('Idade:', item['Idade'])
+    print('Cidade:', item['Cidade'])
     print()
 
 print('Produtos:')
-for nome, info in produtosDict.items():
-    print('Nome:', nome)
-    print('Qtd em estoque:', info['Qtd em estoque'])
-    print('Preço:', info['Preço'])
+for item in produtos:
+    print('Nome:', item['Nome'])
+    print('Qtd em estoque:', item['Qtd em estoque'])
+    print('Preço:', item['Preço'])
     print()
