@@ -1,0 +1,44 @@
+.sobre-nos * {
+    margin: 0;
+}
+
+.sobre-nos {
+    width: 100%;
+}
+
+.text {
+    height: 50vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.text>h3,
+.text>p {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text>h3 {
+    font-size: 5em;
+}
+
+.text>p {
+    font-size: 1.2em;
+    text-align: justify;
+}
+
+.first-one {
+    background-color: #000000;
+    color: #fff;
+}
+
+.second-one {
+    background-color: #fff;
+}
+
+.text>iframe {
+    width: 100%;
+    height: 100%;
+}
