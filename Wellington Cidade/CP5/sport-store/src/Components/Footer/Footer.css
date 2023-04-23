@@ -13,3 +13,15 @@ footer p {
     font-size: 1em;
     font-weight: 600;
 }
+
+@media screen and (max-width: 1400px) {
+    footer p {
+        font-size: 0.6em;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    footer p {
+        font-size: 0.4em;
+    }
+}

@@ -53,3 +53,47 @@
     color: #000000;
     opacity: 0.9;
 }
+
+@media screen and (max-width: 1600px) {
+    .infos-banner>h2 {
+        font-size: 3em;
+    }
+
+    .infos-banner>p {
+        font-size: 6em;
+    }
+
+    .infos-banner button {
+        padding: 1vh 2vw;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .infos-banner>h2 {
+        font-size: 2em;
+    }
+
+    .infos-banner>p {
+        font-size: 4em;
+    }
+
+    .infos-banner button {
+        padding: 0.5vh 1vw;
+        font-size: 0.6em;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .infos-banner>h2 {
+        font-size: 1.5em;
+    }
+
+    .infos-banner>p {
+        font-size: 2.5em;
+    }
+
+    .infos-banner button {
+        padding: 0.4vh 0.8vw;
+        font-size: 0.5em;
+    }
+}
