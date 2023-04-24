@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <>
       <footer>
-        <p>Arthur Foschiani</p>
+        <p>Arthur Foschiani - 96525 | Larah Correa - 96384</p>
       </footer>
     </>
   );
