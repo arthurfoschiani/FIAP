@@ -70,7 +70,7 @@
 
 @media screen and (max-width: 1400px) {
     .infos-banner>h2 {
-        font-size: 2em;
+        font-size: 3em;
     }
 
     .infos-banner>p {
@@ -78,8 +78,8 @@
     }
 
     .infos-banner button {
-        padding: 0.5vh 1vw;
-        font-size: 0.6em;
+        padding: 1vh 1.5vw;
+        font-size: 0.8em;
     }
 }
 
