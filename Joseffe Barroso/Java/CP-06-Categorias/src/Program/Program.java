@@ -36,7 +36,7 @@ public class Program {
 	            switch (opcao) {
 	                case 1:
 	                    System.out.print("Digite o nome da Categoria: ");
-	                    String nome = scanner.next();
+	                    String nome = scanner.nextLine();
 	                    
 	                    db.InserirCategoriaDB(nome);
 	                    
@@ -55,7 +55,7 @@ public class Program {
 	                        System.out.println("Nome: " + CategoriaBuscadaAtt.getNome());
 	                        
 	                        System.out.print("\nDigite o novo nome da Categoria: ");
-	                        String novoNome = scanner.next();
+	                        String novoNome = scanner.nextLine();
 	                        
 	                        Categoria CategoriaAtualizada = new Categoria(idAtt, novoNome);
 	                        
