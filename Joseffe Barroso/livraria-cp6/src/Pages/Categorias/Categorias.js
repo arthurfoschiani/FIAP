@@ -102,7 +102,7 @@ export default function Categorias() {
   return (
     <>
       <div className='Categorias'>
-        <h1>Gerenciamento de caregorias</h1>
+        <h1>Gerenciamento de categorias</h1>
         <div className="addCategoria">
           <input value={novaCategoria.nome} onChange={event => setNovaCategoria({ nome: event.target.value })} type="text" maxLength={30} placeholder="Adicione um categoria"></input>
           <button className="btn_addCategoria" onClick={adicionarCategoria}><img src="https://img.icons8.com/ios-glyphs/30/FFFFFF/plus-math.png" alt="plus-math" /></button>

@@ -10,7 +10,6 @@ export default function Menu() {
                     <li><Link className='a' to="/">Categorias</Link></li>
                     <li><Link className='a' to="/">Autores</Link></li>
                     <li><Link className='a' to="/">Livros</Link></li>
-                    <li><Link className='a' to="/">Categorias</Link></li>
                 </ul>
             </div>
         </nav>

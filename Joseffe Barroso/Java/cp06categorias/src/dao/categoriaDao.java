@@ -1,43 +1,18 @@
-package Connection;
+package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import Model.Categoria;
+import connection.connectionFactory;
+import model.Categoria;
 
-public class categoriaConnection {
-	
-	public Connection ConexaoDB(){
-	       
-        Connection conn=null;
-       
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-           
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL", "rm96525", "211203");
-
-
-            if(conn!=null)
-                System.out.println("Conexão estabelecida com sucesso!");
-            else
-                System.out.println("Falha na conexão com o Banco de Dados!");
-
-
-        } catch (SQLException e) {
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-       
-        return conn;
-    }
+public class categoriaDao {
    
-    public void InserirCategoriaDB(String nome){
+    public void InserirCategoriaDB(String nome) throws SQLException {
        
-        Connection conn = ConexaoDB();
+    	Connection conn = connectionFactory.getConnection();
        
         Statement statement;
        
@@ -47,16 +22,14 @@ public class categoriaConnection {
             statement = conn.createStatement();
            
             statement.executeUpdate(query);
-           
-            System.out.println("Registro incluído com sucesso!");
         }catch (Exception e){
             System.out.println(e);
         }
     }
    
-    public void ListarCategoriasDB(){
+    public void ListarCategoriasDB() throws SQLException {
        
-        Connection conn = ConexaoDB();
+        Connection conn = connectionFactory.getConnection();
        
         Statement statement;
        
@@ -86,9 +59,9 @@ public class categoriaConnection {
         }
     }
 
-    public void AtualizarCategoriaDB(Categoria categoria){
+    public void AtualizarCategoriaDB(Categoria categoria) throws SQLException {
        
-        Connection conn = ConexaoDB();
+        Connection conn = connectionFactory.getConnection();
        
         Statement statement;
        
@@ -98,16 +71,14 @@ public class categoriaConnection {
             statement = conn.createStatement();
            
             statement.executeUpdate(query);
-           
-            System.out.println("Registro atualizado com sucesso!");
         }catch (Exception e){
             System.out.println(e);
         }
     }
    
-    public void ExcluirCategoriaDB(int id){
+    public void ExcluirCategoriaDB(int id) throws SQLException {
        
-        Connection conn = ConexaoDB();
+        Connection conn = connectionFactory.getConnection();
        
         Statement statement;
        
@@ -117,16 +88,14 @@ public class categoriaConnection {
             statement = conn.createStatement();
            
             statement.executeUpdate(query);
-           
-            System.out.println("Registro excluído com sucesso!");
         }catch (Exception e){
             System.out.println(e);
         }
     }
 
-    public Categoria burcarPorId(int id){
+    public Categoria burcarPorId(int id) throws SQLException {
         
-        Connection conn = ConexaoDB();
+        Connection conn = connectionFactory.getConnection();
        
         Statement statement;
        

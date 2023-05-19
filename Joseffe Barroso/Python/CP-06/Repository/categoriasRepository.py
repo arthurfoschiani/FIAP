@@ -38,7 +38,7 @@ class categoriaRepository:
             print(f"Ocorreu um problema durante a execução: {str(request[1])}")
 
     def listarCategorias():
-        request = executeSelect('SELECT * FROM tb_categoria order by 1')
+        request = executeSelect('SELECT * FROM tb_categoria order by 1 desc')
         print(request)
         if (request[0]):
             if (request[1]):

@@ -1,17 +1,17 @@
-package Program;
+package program;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import Connection.categoriaConnection;
-import Model.Categoria;
+import dao.categoriaDao;
+import model.Categoria;
 
 public class Program {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		
-		categoriaConnection db = new categoriaConnection();
+		categoriaDao db = new categoriaDao();
         
         int opcao = 0;
         
@@ -35,8 +35,9 @@ public class Program {
 	            
 	            switch (opcao) {
 	                case 1:
-	                    System.out.print("Digite o nome da Categoria: ");
-	                    String nome = scanner.nextLine();
+	                    System.out.println("Digite o nome da Categoria: ");
+	                    scanner.nextLine();
+	                    String nome = scanner.nextLine();;
 	                    
 	                    db.InserirCategoriaDB(nome);
 	                    
@@ -44,8 +45,9 @@ public class Program {
 	                    System.in.read();
 	                    break;
 	                case 2:
-	                	System.out.print("\nDigite o id do Categoria que deseja atualizar: ");
+	                	System.out.println("\nDigite o id do Categoria que deseja atualizar: ");
 	                    int idAtt = scanner.nextInt();
+	                    scanner.nextLine();
 	                    
 	                    Categoria CategoriaBuscadaAtt = db.burcarPorId(idAtt);
 	                    
@@ -54,7 +56,7 @@ public class Program {
 	                        System.out.println("ID: " + CategoriaBuscadaAtt.getId());
 	                        System.out.println("Nome: " + CategoriaBuscadaAtt.getNome());
 	                        
-	                        System.out.print("\nDigite o novo nome da Categoria: ");
+	                        System.out.println("\nDigite o novo nome da Categoria: ");
 	                        String novoNome = scanner.nextLine();
 	                        
 	                        Categoria CategoriaAtualizada = new Categoria(idAtt, novoNome);
@@ -69,8 +71,9 @@ public class Program {
 	                    }
 	                    break;
 	                case 3:
-	                	System.out.print("\nDigite o id da Categoria que deseja deletar: ");
+	                	System.out.println("\nDigite o id da Categoria que deseja deletar: ");
 	                    int idDel = scanner.nextInt();
+	                    scanner.nextLine();
 	                    
 	                    Categoria CategoriaBuscadaDel = db.burcarPorId(idDel);
 	                    
@@ -82,16 +85,21 @@ public class Program {
 	                        
 	                        db.ExcluirCategoriaDB(idDel);
 	                        
+	                        System.out.println("\nCategoria deletada com sucesso!");
+	                        System.in.read();
+	                        
 	                    } else {
 	                        System.out.println("\nCategoria não encontrada!");
 	                    }
 	                    break;
 	                case 4:
-	                	db.ListarCategoriasDB();                	
+	                	db.ListarCategoriasDB();
+                        System.in.read();
 	                    break;
 	                case 5:
-	                	System.out.print("\nDigite o id da Categoria que deseja buscar: ");
+	                	System.out.println("\nDigite o id da Categoria que deseja buscar: ");
 	                    int idList = scanner.nextInt();
+	                    scanner.nextLine();
 	                    
 	                    Categoria CategoriaBuscadaList = db.burcarPorId(idList);
 	                    
@@ -99,7 +107,8 @@ public class Program {
 	                        System.out.println("\nCategoria encontrada: ");
 	                        System.out.println("ID: " + CategoriaBuscadaList.getId());
 	                        System.out.println("Nome: " + CategoriaBuscadaList.getNome());
-	                        System.out.println();                        
+	                        System.out.println();
+	                        System.in.read();
 	                    } else {
 	                        System.out.println("\nCategoria não encontrada!");
 	                    }
