@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        Produto produto = new Produto(null, "Danone", new BigDecimal(15.90));
+        Produto produto = new Produto(null, "Danone", new BigDecimal("15.90"));
 
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("oracle");
         EntityManager manager = factory.createEntityManager();
