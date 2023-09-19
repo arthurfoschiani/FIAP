@@ -56,17 +56,17 @@ declare
     v_exibe c_exibe%rowtype;
 begin
     for v_exibe in c_exibe loop
-        update funcionario set tempo = trunc(sysdate) - v_exibe.dt_adm where cd_fun = v_exibe.cd_fun;
+        update funcionario set tempo = sysdate - v_exibe.dt_adm where cd_fun = v_exibe.cd_fun;
     end loop;
 end;
 
 //Adicionar aumento para os funcionarios
 declare
-    cursor c_exibe is select cd_fun, tempo from funcionario;
+    cursor c_exibe is select cd_fun, dt_adm, tempo from funcionario;
     v_exibe c_exibe%rowtype;
 begin
     for v_exibe in c_exibe loop
-        if v_exibe.tempo >= 4500 then
+        if MONTHS_BETWEEN(sysdate, v_exibe.dt_adm) >= 150 then
             update funcionario set salario = salario * 1.10 where cd_fun = v_exibe.cd_fun;
         else
             update funcionario set salario = salario * 1.05 where cd_fun = v_exibe.cd_fun;
