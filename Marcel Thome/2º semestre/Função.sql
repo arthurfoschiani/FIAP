@@ -76,3 +76,72 @@ BEGIN
 END;
 
 SELECT * FROM boletim;
+
+
+--Exercício Medias notas CPs
+CREATE OR REPLACE FUNCTION mediaNotasCP (nota1 IN NUMBER, nota2 IN NUMBER, nota3 IN NUMBER)
+    RETURN number
+IS 
+    menor number;
+    media number;
+    media_semestre number;
+begin
+    -- Encontrar a menor nota
+    if nota1 <= nota2 and nota1 <= nota3 then
+        menor := nota1;
+    elsif nota2 <= nota1 and nota2 <= nota3 then
+        menor := nota2;
+    else
+        menor := nota3;
+    end if;
+
+    -- Calcular a média das duas maiores notas
+    if nota1 = menor then
+        media := (nota2 + nota3) / 2;
+    elsif nota2 = menor then
+        media := (nota1 + nota3) / 2;
+    else
+        media := (nota1 + nota2) / 2;
+    end if;
+
+    dbms_output.put_line('Média dos cps: ' || media);
+    
+    return media;
+end;
+
+select mediaNotasCP(7,9,10) from dual;
+
+CREATE OR REPLACE FUNCTION maiorValor (nota1 IN NUMBER, nota2 IN NUMBER)
+    RETURN number
+IS
+begin
+    -- Encontrar a menor nota
+    if nota1 < nota2 then
+        return nota2;
+    elsif nota1 > nota2 then
+        return nota1;
+    else
+        return null;
+    end if;
+end;
+
+select maiorValor(8,8) from dual;
+
+CREATE OR REPLACE FUNCTION calcular_fatorial (n IN NUMBER)
+    RETURN number
+IS
+    resultado number := 1;
+begin
+    if n < 0 then
+        return null;
+    elsif n = 0 or n = 1 then
+        return 1;
+    else
+        for i in 2..n loop
+            resultado := resultado * i;
+        end loop;
+        return resultado;
+    end if;
+end;
+
+vgg
