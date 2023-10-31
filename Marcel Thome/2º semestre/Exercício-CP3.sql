@@ -16,8 +16,16 @@ CREATE TABLE Notas_Faltas (
     nota3 NUMBER(3, 1),
     faltas NUMBER(3),
     media NUMBER(3, 1),
-    situacao VARCHAR2(20)
+    situacao VARCHAR2(30)
 );
+
+INSERT INTO Notas_Faltas (rm, nm_aluno, nm_disciplina, carga_hora, nota1, nota2, nota3, faltas) VALUES
+(1, 'Marcel', 'DBA', 120, 10, 10, 10, 0);
+
+INSERT INTO Notas_Faltas (rm, nm_aluno, nm_disciplina, carga_hora, nota1, nota2, nota3, faltas) VALUES
+(2, 'Marcel', 'IA', 120, 1.5, 1.5, 1.5, 70);
+
+commit;
 
 SELECT * from Notas_Faltas;
 
