@@ -268,3 +268,66 @@ EXCEPTION
     WHEN OTHERS THEN
         dbms_output.put_line('Erro ao executar a operação.');
 END;
+
+
+
+
+DECLARE
+BEGIN
+    dbms_output.put_line('Relatório de Vendas e Vendedores:');
+    dbms_output.put_line('ID Venda | Data Venda | Total Venda | ID Vendedor | Nome Vendedor');
+
+    FOR r IN (SELECT v.id_venda, v.dt_venda, v.total_venda, vd.id_vendedor, vd.nm_vendedor
+              FROM venda v
+              JOIN vendedor vd ON v.fk_vendedor = vd.id_vendedor
+              ORDER BY v.id_venda)
+    LOOP
+        dbms_output.put_line(r.id_venda || ' | ' || 
+                             r.dt_venda || ' | ' || 
+                             r.total_venda || ' | ' || 
+                             r.id_vendedor || ' | ' || 
+                             r.nm_vendedor);
+    END LOOP;
+    
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        dbms_output.put_line('Nenhuma venda encontrada.');
+    WHEN OTHERS THEN
+        dbms_output.put_line('Erro ao executar a operação de geração de relatório.');
+END;
+
+
+
+
+DECLARE
+    v_salario_bonus NUMBER(10,2);
+BEGIN
+    dbms_output.put_line('Relatório de Vendedores com Salário + Bônus:');
+    dbms_output.put_line('ID Vendedor | Nome Vendedor | Salário Base | Bônus 10% Vendas | Salário Final');
+    dbms_output.put_line('--------------------------------------------------------------------------------');
+
+    FOR r IN (
+        SELECT vd.id_vendedor,
+               vd.nm_vendedor,
+               vd.salario,
+               SUM(v.total_venda) * 0.10 AS bonus_vendas,
+               vd.salario + (SUM(v.total_venda) * 0.10) AS salario_final
+        FROM vendedor vd
+        LEFT JOIN venda v ON vd.id_vendedor = v.fk_vendedor
+        GROUP BY vd.id_vendedor, vd.nm_vendedor, vd.salario
+        ORDER BY vd.id_vendedor
+    )
+    LOOP
+        dbms_output.put_line(r.id_vendedor || ' | ' || 
+                             r.nm_vendedor || ' | ' || 
+                             r.salario || ' | ' || 
+                             r.bonus_vendas || ' | ' || 
+                             r.salario_final);
+    END LOOP;
+    
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        dbms_output.put_line('Nenhum registro encontrado.');
+    WHEN OTHERS THEN
+        dbms_output.put_line('Erro ao executar a operação de geração de relatório.');
+END;
