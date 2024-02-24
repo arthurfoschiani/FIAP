@@ -4,6 +4,7 @@ set serveroutput on
 set verify off
 --Serve para mostrar o resultado direto
 
+-- Tabela produto: insert, update, delete e select
 create table produto (
     id_pro number(3) primary key,
     ds_pro varchar(40) not null unique,
@@ -68,6 +69,7 @@ END;
 
 
 
+-- Tabela vendedor: insert, update, delete e select
 create table vendedor (
     id_vendedor number(3) primary key,
     nm_vendedor varchar(40) not null unique,
@@ -128,6 +130,7 @@ END;
 
 
 
+-- Tabela venda: insert, update, delete e select
 create table venda (
     id_venda number(3) primary key,
     dt_venda date not null,
@@ -137,11 +140,11 @@ create table venda (
 
 SELECT * FROM venda;
 
-INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (1, '01-JAN-23', 1000.00, 1);
-INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (2, '01-FEB-23', 2000.00, 2);
-INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (3, '01-MAR-23', 3000.00, 3);
-INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (4, '01-APR-23', 4000.00, 4);
-INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (5, '01-MAY-23', 5000.00, 5);
+INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (1, '01/01/23', 1000.00, 1);
+INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (2, '01/02/23', 2000.00, 2);
+INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (3, '01/03/23', 3000.00, 3);
+INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (4, '01/04/23', 4000.00, 4);
+INSERT INTO venda (id_venda, dt_venda, total_venda, fk_vendedor) VALUES (5, '01/05/23', 5000.00, 5);
 
 DECLARE
     v_id_venda number(3) := &id_venda;
@@ -192,19 +195,22 @@ END;
 
 
 
+-- Tabela item_venda: insert, update, delete e select
 create table item_venda (
     fk_pro number(3) references produto not null,
     fk_venda number(3) references venda not null,
-    total_pro number(10,2)
+    total_pro number(10,2),
+    qtd_pro number(5,2) not null
 );
 
 SELECT * FROM item_venda;
 
-INSERT INTO item_venda (fk_pro, fk_venda, total_pro) VALUES (1, 1, 100.00);
-INSERT INTO item_venda (fk_pro, fk_venda, total_pro) VALUES (2, 2, 200.00);
-INSERT INTO item_venda (fk_pro, fk_venda, total_pro) VALUES (3, 3, 300.00);
-INSERT INTO item_venda (fk_pro, fk_venda, total_pro) VALUES (4, 4, 400.00);
-INSERT INTO item_venda (fk_pro, fk_venda, total_pro) VALUES (5, 5, 500.00);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (1, 1, 2);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (2, 2, 3);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (5, 2, 5);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (3, 3, 2);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (4, 4, 2);
+INSERT INTO item_venda (fk_pro, fk_venda, qtd_pro) VALUES (5, 5, 1);
 
 DECLARE
     v_fk_pro number(3) := &fk_produto;
@@ -252,6 +258,7 @@ END;
 
 
 
+-- Relatório da venda e seus respectivos produtos
 DECLARE
     v_id_venda number(3) := &codigo_venda;
 BEGIN
@@ -272,6 +279,7 @@ END;
 
 
 
+-- Relatório de venda e seus respectivos vendedores
 DECLARE
 BEGIN
     dbms_output.put_line('Relatório de Vendas e Vendedores:');
@@ -299,6 +307,7 @@ END;
 
 
 
+-- Relatório de vendedor com seu salário acrescido em 10%
 DECLARE
     v_salario_bonus NUMBER(10,2);
 BEGIN
@@ -331,3 +340,89 @@ BEGIN
     WHEN OTHERS THEN
         dbms_output.put_line('Erro ao executar a operação de geração de relatório.');
 END;
+
+
+
+
+--Preencher coluna total_pro na tabela produto
+DECLARE
+  v_fk_pro NUMBER(3);
+  v_fk_venda NUMBER(3);
+  v_total_pro NUMBER(10,2);
+BEGIN
+  FOR iv IN (SELECT * FROM item_venda) LOOP
+    v_fk_pro := iv.fk_pro;
+    v_fk_venda := iv.fk_venda;
+
+    SELECT pr_pro INTO v_total_pro FROM produto WHERE id_pro = v_fk_pro;
+
+    UPDATE item_venda
+      SET total_pro = v_total_pro * iv.qtd_pro
+      WHERE fk_pro = v_fk_pro AND fk_venda = v_fk_venda;
+  END LOOP;
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Erro ao calcular o total do item.');
+END;
+
+select * from item_venda;
+
+--Emitir NF e total venda
+DECLARE
+  v_id_venda NUMBER(3) := &cod_venda;
+  v_total_venda NUMBER(10,2) := 0;
+  v_nome_vendedor VARCHAR2(40);
+  v_data_venda DATE;
+  v_itens_venda VARCHAR2(2000);
+  v_fk_vendedor NUMBER;
+  v_descricao_produto VARCHAR2(100);
+  v_preco_produto NUMBER(10,2);
+  v_qtd_pro NUMBER(5,2);
+
+BEGIN
+  SELECT fk_vendedor, dt_venda
+    INTO v_fk_vendedor, v_data_venda
+    FROM venda
+    WHERE id_venda = v_id_venda;
+
+  SELECT nm_vendedor
+    INTO v_nome_vendedor
+    FROM vendedor
+    WHERE id_vendedor = v_fk_vendedor;
+
+  v_itens_venda := '';
+
+  FOR iv IN (SELECT fk_pro, qtd_pro FROM item_venda WHERE fk_venda = v_id_venda) LOOP
+    SELECT ds_pro, pr_pro
+      INTO v_descricao_produto, v_preco_produto
+      FROM produto
+      WHERE id_pro = iv.fk_pro;
+
+    v_qtd_pro := iv.qtd_pro;
+    v_total_venda := v_total_venda + (v_preco_produto * v_qtd_pro);
+
+    v_itens_venda := v_itens_venda || v_descricao_produto || ' - R$' || v_preco_produto || ' - Qtd: ' || v_qtd_pro || chr(10);
+  END LOOP;
+
+  UPDATE venda
+  SET total_venda = v_total_venda
+  WHERE id_venda = v_id_venda;
+
+  DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+  DBMS_OUTPUT.PUT_LINE('**NOTA FISCAL**');
+  DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+  DBMS_OUTPUT.PUT_LINE('Número: NF-' || TO_CHAR(v_id_venda));
+  DBMS_OUTPUT.PUT_LINE('Data: ' || TO_CHAR(v_data_venda, 'DD/MM/YYYY'));
+  DBMS_OUTPUT.PUT_LINE('Vendedor: ' || v_nome_vendedor);
+  DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+  DBMS_OUTPUT.PUT_LINE(v_itens_venda);
+  DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+  DBMS_OUTPUT.PUT_LINE('Total: R$' || v_total_venda);
+  DBMS_OUTPUT.PUT_LINE('---------------------------------------');
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    DBMS_OUTPUT.PUT_LINE('Venda não encontrada.');
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Erro ao gerar a NF.');
+END;
+
