@@ -378,25 +378,15 @@ DECLARE
   v_descricao_produto VARCHAR2(100);
   v_preco_produto NUMBER(10,2);
   v_qtd_pro NUMBER(5,2);
+  CURSOR c_item_venda IS SELECT fk_pro, qtd_pro FROM item_venda WHERE fk_venda = v_id_venda;
 
 BEGIN
-  SELECT fk_vendedor, dt_venda
-    INTO v_fk_vendedor, v_data_venda
-    FROM venda
-    WHERE id_venda = v_id_venda;
+  SELECT fk_vendedor, dt_venda INTO v_fk_vendedor, v_data_venda FROM venda WHERE id_venda = v_id_venda;
 
-  SELECT nm_vendedor
-    INTO v_nome_vendedor
-    FROM vendedor
-    WHERE id_vendedor = v_fk_vendedor;
+  SELECT nm_vendedor INTO v_nome_vendedor FROM vendedor WHERE id_vendedor = v_fk_vendedor;
 
-  v_itens_venda := '';
-
-  FOR iv IN (SELECT fk_pro, qtd_pro FROM item_venda WHERE fk_venda = v_id_venda) LOOP
-    SELECT ds_pro, pr_pro
-      INTO v_descricao_produto, v_preco_produto
-      FROM produto
-      WHERE id_pro = iv.fk_pro;
+  FOR iv IN c_item_venda LOOP
+    SELECT ds_pro, pr_pro INTO v_descricao_produto, v_preco_produto FROM produto WHERE id_pro = iv.fk_pro;
 
     v_qtd_pro := iv.qtd_pro;
     v_total_venda := v_total_venda + (v_preco_produto * v_qtd_pro);
@@ -426,3 +416,64 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Erro ao gerar a NF.');
 END;
 
+
+--Função para reajusta o salário em 25%
+CREATE OR REPLACE FUNCTION aumentoSalario (salario IN NUMBER)
+    RETURN number
+IS 
+    salarioReajustado number(8,2);
+BEGIN
+    salarioReajustado := salario * 1.25;
+    RETURN salarioReajustado;
+END;
+
+select aumentoSalario(1500) from dual;
+
+
+--Bloco para reajusta salário dos vendedores
+declare
+    cursor c_vendedor is select id_vendedor, nm_vendedor, salario from vendedor;
+    resul number(10,2);
+begin
+    for vd in c_vendedor
+    loop
+        resul := aumentoSalario(vd.salario);
+        DBMS_OUTPUT.PUT_LINE('O salario do vendedor ' || vd.nm_vendedor || ' foi de ' || vd.salario || ' para ' || resul);
+        update vendedor
+        set salario = resul
+        where id_vendedor = vd.id_vendedor;
+    end loop;
+end;
+
+
+--Procedure para mostrar detalhes do produto
+CREATE OR REPLACE PROCEDURE PROC_DADOS_PROD (C_PRO IN NUMBER) 
+IS
+    v_id_pro number(3);
+    v_ds_pro varchar(40);
+    v_pr_pro number(8,2);
+    v_estoque number(10,2);
+BEGIN
+    SELECT id_pro, ds_pro, pr_pro, estoque INTO v_id_pro, v_ds_pro, v_pr_pro, v_estoque FROM produto WHERE id_pro = c_pro;
+    DBMS_OUTPUT.PUT_LINE ('Id produto: ' || v_id_pro);
+    DBMS_OUTPUT.PUT_LINE ('Descrição produto: ' || v_ds_pro);
+    DBMS_OUTPUT.PUT_LINE ('Preço produto: ' || v_pr_pro);
+    DBMS_OUTPUT.PUT_LINE ('Estoque produto: ' || v_estoque);
+END PROC_DADOS_PROD;
+
+EXEC PROC_DADOS_PROD(1);
+
+
+--Procedure para mostrar descrição do produto com mais de 5 de estoque
+CREATE OR REPLACE PROCEDURE PROC_PRODUTOS_ESTOQUE_CHEIO (comeca in boolean) 
+IS
+    CURSOR C_PRODUTOS IS SELECT ds_pro FROM produto WHERE estoque > 5;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE ('Produtos com estoque maior que 5: ');
+    FOR prod IN C_PRODUTOS
+    LOOP
+        DBMS_OUTPUT.PUT_LINE (prod.ds_pro);
+    END LOOP;
+END PROC_PRODUTOS_ESTOQUE_CHEIO;
+
+EXEC PROC_PRODUTOS_ESTOQUE_CHEIO(false);
