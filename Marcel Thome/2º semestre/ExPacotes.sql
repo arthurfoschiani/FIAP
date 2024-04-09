@@ -68,7 +68,9 @@ COMMIT;
 
 CREATE OR REPLACE PACKAGE pkg_aluno AS
     FUNCTION calcular_media(nota1 NUMBER, nota2 NUMBER, nota3 NUMBER) RETURN NUMBER;
-    PROCEDURE mostrar_situacao(p_rm_aluno VARCHAR2);
+    FUNCTION calcular_situacao(media NUMBER, faltas NUMBER, carga_horaria VARCHAR) RETURN VARCHAR;
+    PROCEDURE atualizar_historico(p_id_historico NUMBER, p_media NUMBER, p_situacao VARCHAR);
+    PROCEDURE mostrar_situacao(p_rm_aluno VARCHAR);
 END pkg_aluno;
 
 CREATE OR REPLACE PACKAGE BODY pkg_aluno AS
@@ -77,38 +79,44 @@ CREATE OR REPLACE PACKAGE BODY pkg_aluno AS
         RETURN (nota1 + nota2 + nota3) / 3;
     END calcular_media;
     
-    PROCEDURE mostrar_situacao(p_rm_aluno VARCHAR2) IS
-        v_media NUMBER;
-        v_situacao VARCHAR2(10);
-        v_faltas NUMBER;
-        v_carga_horaria NUMBER;
+    FUNCTION calcular_situacao(media NUMBER, faltas NUMBER, carga_horaria VARCHAR) RETURN VARCHAR IS
         v_limite_faltas NUMBER;
     BEGIN
-        FOR r IN (SELECT h.id_historico, h.nota1, h.nota2, h.nota3, h.falta, d.carga_hora, hd.id_disc
+        v_limite_faltas := TO_NUMBER(carga_horaria) * 0.25;
+        IF media >= 7 AND faltas <= v_limite_faltas THEN
+            RETURN 'Aprovado';
+        ELSE
+            RETURN 'Reprovado';
+        END IF;
+    END calcular_situacao;
+    
+    PROCEDURE atualizar_historico(p_id_historico NUMBER, p_media NUMBER, p_situacao VARCHAR) IS
+    BEGIN
+        UPDATE historico
+        SET media = p_media, situacao = p_situacao
+        WHERE id_historico = p_id_historico;
+    END atualizar_historico;
+    
+    PROCEDURE mostrar_situacao(p_rm_aluno VARCHAR) IS
+        v_media NUMBER;
+        v_situacao VARCHAR(10);
+    BEGIN
+        FOR r IN (SELECT h.id_historico, h.nota1, h.nota2, h.nota3, h.falta, d.carga_hora, d.nome_disc
                   FROM historico h
                   JOIN historico_discplina hd ON h.id_historico = hd.id_historico
                   JOIN disciplina d ON hd.id_disc = d.id_disc
                   WHERE h.rm_aluno = p_rm_aluno)
         LOOP
             v_media := calcular_media(r.nota1, r.nota2, r.nota3);
-            v_faltas := TO_NUMBER(r.falta);
-            v_carga_horaria := TO_NUMBER(r.carga_hora);
-            v_limite_faltas := v_carga_horaria * 0.25;
-            IF v_media >= 7 AND r.falta <= v_limite_faltas THEN
-                v_situacao := 'Aprovado';
-            ELSE
-                v_situacao := 'Reprovado';
-            END IF;
+            v_situacao := calcular_situacao(v_media, r.falta, r.carga_hora);
+            atualizar_historico(r.id_historico, v_media, v_situacao);
             
-            UPDATE historico SET media = v_media, situacao = v_situacao
-            WHERE id_historico = r.id_historico;
-            
-            DBMS_OUTPUT.PUT_LINE('RM: ' || p_rm_aluno || ' - Disciplina: ' || r.id_disc || ' - Média: ' || v_media || ' - Faltas: ' || v_faltas || ' - Situação: ' || v_situacao);
+            DBMS_OUTPUT.PUT_LINE('RM: ' || p_rm_aluno || ' - Disciplina: ' || r.nome_disc || ' - Média: ' || v_media || ' - Faltas: ' || r.falta || ' - Situação: ' || v_situacao);
         END LOOP;
         COMMIT;
     END mostrar_situacao;
 END pkg_aluno;
 
 BEGIN
-    pkg_aluno.mostrar_situacao('12345');
+    pkg_aluno.mostrar_situacao('67890');
 END;
