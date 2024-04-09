@@ -91,6 +91,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_aluno AS
                   WHERE h.rm_aluno = p_rm_aluno)
         LOOP
             v_media := calcular_media(r.nota1, r.nota2, r.nota3);
+            v_faltas := TO_NUMBER(r.falta);
             v_carga_horaria := TO_NUMBER(r.carga_hora);
             v_limite_faltas := v_carga_horaria * 0.25;
             IF v_media >= 7 AND r.falta <= v_limite_faltas THEN
@@ -102,7 +103,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_aluno AS
             UPDATE historico SET media = v_media, situacao = v_situacao
             WHERE id_historico = r.id_historico;
             
-            DBMS_OUTPUT.PUT_LINE('RM: ' || p_rm_aluno || ' - Disciplina: ' || r.id_disc || ' - Média: ' || v_media || ' - Situação: ' || v_situacao);
+            DBMS_OUTPUT.PUT_LINE('RM: ' || p_rm_aluno || ' - Disciplina: ' || r.id_disc || ' - Média: ' || v_media || ' - Faltas: ' || v_faltas || ' - Situação: ' || v_situacao);
         END LOOP;
         COMMIT;
     END mostrar_situacao;
